@@ -1,0 +1,134 @@
+<section class="hero">
+  <div class="hero__copy">
+    <p class="eyebrow">Barbershop in Hamburg</p>
+    <h1>Schnitt und Bart, die nach zwei Wochen noch sitzen</h1>
+    <p>Drei Stühle, feste Preise, ein Termin über WhatsApp. Keine Mitgliedskarte.</p>
+    <button class="btn" type="button" (click)="ui.openBooking()">Termin vereinbaren</button>
+  </div>
+  <figure class="hero__photo">
+    <img src="images/hero.png" alt="Haarschnitt im Kammwerk" />
+  </figure>
+</section>
+
+<section class="hours">
+  <div class="wrap hours__grid">
+    @for (row of shop.shop.openingHours; track row.days) {
+      <p><span>{{ row.days }}</span><strong>{{ row.hours }}</strong></p>
+    }
+    <a [href]="shop.shop.phoneHref">{{ shop.shop.phoneDisplay }}</a>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap split">
+    <img src="images/about.png" alt="Arbeit im Kammwerk" />
+    <div>
+      <p class="eyebrow">Der Laden</p>
+      <h2>Seit 2014 an derselben Adresse</h2>
+      <p>Das Kammwerk ist ein Herrensalon in der Hamburger Innenstadt. Wir schneiden, rasieren und pflegen Bärte. Massagen und Clubkarten gibt es hier nicht.</p>
+      <ul>
+        @for (point of shop.aboutPoints; track point) {
+          <li><app-icon name="check" /> {{ point }}</li>
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="band band--paper">
+  <div class="wrap">
+    <header class="center">
+      <p class="eyebrow">Leistungen</p>
+      <h2>Was auf der Karte steht</h2>
+    </header>
+    <div class="cards cards--3">
+      @for (service of shop.services; track service.id) {
+        <article class="card">
+          <span class="card__icon"><app-icon [name]="service.icon" /></span>
+          <h3>{{ service.title }}</h3>
+          <p>{{ service.summary }}</p>
+          <strong>{{ service.price }}</strong>
+        </article>
+      }
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap price-layout">
+    <img src="images/shop.png" alt="Stuhl im Salon" />
+    <div>
+      <p class="eyebrow">Preise</p>
+      <h2>Ausgehängt, bevor Sie sich setzen</h2>
+      <ul class="price-list">
+        @for (line of shop.prices; track line.name) {
+          <li><span>{{ line.name }}</span><span>{{ line.price }}</span></li>
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="band band--ink">
+  <div class="wrap">
+    <header class="center">
+      <p class="eyebrow">Ablauf</p>
+      <h2>So läuft ein Termin</h2>
+    </header>
+    <div class="cards cards--3">
+      @for (step of shop.steps; track step.step) {
+        <article>
+          <span class="step">{{ step.step }}</span>
+          <h3>{{ step.title }}</h3>
+          <p>{{ step.text }}</p>
+        </article>
+      }
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <header class="center">
+      <p class="eyebrow">Team</p>
+      <h2>Wer die Schere hält</h2>
+    </header>
+    <div class="cards cards--3">
+      @for (barber of shop.barbers; track barber.slug) {
+        <article class="person">
+          <a [routerLink]="['/team', barber.slug]"><img [src]="barber.image" [alt]="barber.name" /></a>
+          <p class="eyebrow">{{ barber.role }}</p>
+          <h3><a [routerLink]="['/team', barber.slug]">{{ barber.name }}</a></h3>
+          <p>{{ barber.shortBio }}</p>
+        </article>
+      }
+    </div>
+  </div>
+</section>
+
+<section class="mosaic">
+  @for (shot of shop.gallery; track shot.image) {
+    <figure [class.is-wide]="shot.wide">
+      <img [src]="shot.image" [alt]="shot.alt" />
+    </figure>
+  }
+</section>
+
+<section class="band band--paper">
+  <div class="wrap">
+    <header class="center">
+      <p class="eyebrow">Journal</p>
+      <h2>Kurze Notizen aus dem Salon</h2>
+    </header>
+    <div class="cards cards--2">
+      @for (post of shop.latestPosts(); track post.slug) {
+        <article class="post">
+          <a [routerLink]="['/journal', post.slug]"><img [src]="post.image" [alt]="post.title" /></a>
+          <p class="eyebrow">{{ post.date }} · {{ post.author }}</p>
+          <h3><a [routerLink]="['/journal', post.slug]">{{ post.title }}</a></h3>
+          <p>{{ post.excerpt }}</p>
+        </article>
+      }
+    </div>
+  </div>
+</section>
